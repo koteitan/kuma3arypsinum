@@ -2,7 +2,7 @@
   var composition=function(X,n,m){
   if(m==0)return n;
   else if(m==1)return fgh(X,n);
-  else return composition(X,n,m-1);
+  else return composition(X,fgh(X,n),m-1);
 }
 
 /* https://googology.wikia.org/ja/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Kanrokoti/%E3%81%8F%E3%81%BE%E3%81%8F%E3%81%BE3%E5%A4%89%E6%95%B0%CF%88#.E5.B7.A8.E5.A4.A7.E9.96.A2.E6.95.B0 */
@@ -10,9 +10,9 @@ var fgh=function(X,n){
   //1. If X=0, then f_X(n)=n+1
   if(X.iszero()) return n+1;
   //2. If X=$1 or X=Y+$1 for some Y in T, then f_X(n)=f_X[0]^n(n)
-  else if(X.isadd() && X.a[X.a.length-1].isone()) return composition(X.expand(Kuma3ary.k0),n,n);
+  else if(X.isone() || (X.isadd() && X.a[X.a.length-1].isone())) return composition(X.expand(Kuma3ary.k0),n,n);
   //3. If neither or them, them f_X(n)=f_{X[$n]}(n)
-  else return fgh(X.expand(n),n);
+  else return fgh(X.expand(new Kuma3ary(n)),n);
 };
 
 var g=function(n){
